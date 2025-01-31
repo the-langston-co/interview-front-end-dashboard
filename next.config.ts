@@ -25,4 +25,4 @@ const config: NextConfig = {
   }
 };
 
-export default config;;
+export default config;

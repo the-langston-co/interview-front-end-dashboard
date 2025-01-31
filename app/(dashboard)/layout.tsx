@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';
 import { User } from './user';
-import { LangstonLogo, VercelLogo } from '@/components/icons';
+import { LangstonLogo } from '@/components/icons';
 
 import Providers from './providers';
 import { NavItem } from './nav-item';
