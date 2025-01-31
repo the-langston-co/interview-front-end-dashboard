@@ -44,6 +44,9 @@ export function LoginForm() {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete={'off'}
+                data-onepassword-filled="false"
+                data-onepassword-suppress="true"
                 required
               />
             </div>
@@ -59,6 +62,9 @@ export function LoginForm() {
                 type="password"
                 id="password"
                 name="password"
+                autoComplete={'off'}
+                data-onepassword-filled="false"
+                data-onepassword-suppress="true"
                 required
               />
             </div>
