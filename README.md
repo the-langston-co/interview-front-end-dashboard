@@ -51,7 +51,8 @@ This codebase uses the following stack:
 
 First, ensure you have Node 18 (or higher) installed.
 
-> [!TIP] > [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
+> [!TIP] 
+> [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
 > versions of node
 > via the command line
 
