@@ -2,7 +2,8 @@
 <h1 style="text-align: center; margin:0;">Front-end coding exercise</h1>
 <br />
 
-For this exercise, we will be adding some features/functionality to an example dashboard application. Many features/pages have not been implemented yet, so it's expected that some buttons/links in the app do not do anything. 
+For this exercise, we will be adding some features/functionality to an example dashboard application. Many
+features/pages have not been implemented yet, so it's expected that some buttons/links in the app do not do anything.
 
 The goal is to
 simulate a somewhat realistic situation that you may encounter while working at Langston. You are welcome to use any
@@ -17,10 +18,16 @@ Follow the instructions in **Project Setup** to get up and running, then work th
 
 - [Overview](#overview)
 - [Project setup](#project-setup)
-  - [Installation](#installation)
-  - [Create mock data](#create-mock-data)
-  - [Start the application](#start-the-application)
+  * [Installation](#installation)
+  * [Create seed data](#create-seed-data)
+  * [Start the application](#start-the-application)
 - [Tasks](#tasks)
+  * [Edit a product](#edit-a-product)
+  * [Create a product](#create-a-product)
+  * [View product detail page](#view-product-detail-page)
+  * [Ensure only Admin users can edit a project](#ensure-only-admin-users-can-edit-a-project)
+  * [Add an option to change the page size on the Products table](#add-an-option-to-change-the-page-size-on-the-products-table)
+  * [View my account settings](#view-my-account-settings)
 
 <!-- tocstop -->
 
@@ -43,7 +50,8 @@ This codebase uses the following stack:
 
 First, ensure you have Node 18 (or higher) installed.
 
-> [!TIP] > [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
+> [!TIP]
+> [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
 > versions of node
 > via the command line
 
@@ -53,7 +61,7 @@ Next, install the project's dependencies.
 npm install
 ```
 
-### Create mock data
+### Create seed data
 
 For simplicity, this project is using SQLite, which is a file system based SQL database, running on your local machine.
 
@@ -71,14 +79,15 @@ This will execute the script in `database/connect.ts`. Once this has completed, 
 Finally, run the following commands to start the development server:
 
 ```bash
-npm dev
+npm run dev
 ```
 
 You should now be able to access the application at http://localhost:3000.
 
 ## Tasks
 
-You may work on these tasks in any order you'd like. While developing, keep in mind that all features should work well on screen sizes.
+You may work on these tasks in any order you'd like. While developing, keep in mind that all features should work well
+on screen sizes.
 
 ### Edit a product
 
@@ -96,7 +105,8 @@ information about a product: name, status, imageUrl, price, stock and image.
 
 ### Ensure only Admin users can edit a project
 
-As a user, I must have the appropriate permissions in order to edit a project. If I do not have the proper permissions, I should not be able to access the edit functionality.
+As a user, I must have the appropriate permissions in order to edit a project. If I do not have the proper permissions,
+I should not be able to access the edit functionality.
 For testing, you can log in as an admin using the following credentials:
 
 ```
@@ -106,8 +116,10 @@ password: testing
 
 ### Add an option to change the page size on the Products table
 
-As a user, I want to choose a different page size to view more/fewer products at a time. The current default is 5 per page.
+As a user, I want to choose a different page size to view more/fewer products at a time. The current default is 5 per
+page.
 
 ### View my account settings
 
-As a user, I want to be able to access my account settings. There is not currently a page built for this, but there is a link in the User dropdown menu.
+As a user, I want to be able to access my account settings. There is not currently a page built for this, but there is a
+link in the User dropdown menu.
