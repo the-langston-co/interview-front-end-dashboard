@@ -28,6 +28,7 @@ Follow the instructions in **Project Setup** to get up and running, then work th
   * [Ensure only Admin users can edit a project](#ensure-only-admin-users-can-edit-a-project)
   * [Add an option to change the page size on the Products table](#add-an-option-to-change-the-page-size-on-the-products-table)
   * [View my account settings](#view-my-account-settings)
+  * [Show a confirmation message before deleting a product](#show-a-confirmation-message-before-deleting-a-product)
 
 <!-- tocstop -->
 
@@ -50,8 +51,7 @@ This codebase uses the following stack:
 
 First, ensure you have Node 18 (or higher) installed.
 
-> [!TIP]
-> [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
+> [!TIP] > [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
 > versions of node
 > via the command line
 
@@ -123,3 +123,7 @@ page.
 
 As a user, I want to be able to access my account settings. There is not currently a page built for this, but there is a
 link in the User dropdown menu.
+
+### Show a confirmation message before deleting a product
+
+As a user, I want to have a change to confirm I want to delete a product in case I pushed the button on accident.

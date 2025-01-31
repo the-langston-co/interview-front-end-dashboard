@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { productUpdateSchema, updateProduct } from '@/lib/db';
+import { updateProduct } from '@/lib/db';
+import { productUpdateSchema } from '@/lib/schemas';
 
 export async function PUT(
   request: Request,

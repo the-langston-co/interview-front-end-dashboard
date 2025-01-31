@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Product, ProductStatus } from '@/lib/models/Product';
-import { statusEnum } from '@/lib/db';
+
+import { statusEnum } from '@/lib/schemas';
 
 function mockProduct(id: number, status?: ProductStatus): Product {
   const defaultStatus = statusEnum.options[id % statusEnum.options.length];

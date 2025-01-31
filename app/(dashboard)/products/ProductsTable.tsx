@@ -19,8 +19,8 @@ import { ProductRow } from './productRow';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { SelectProduct } from '@/lib/db';
 import { usePathname } from 'next/navigation';
+import { SelectProduct } from '@/lib/schemas';
 
 export function ProductsTable({
   products,
@@ -74,7 +74,7 @@ export function ProductsTable({
             Showing{' '}
             <strong>
               {Math.max(0, Math.min(offset, totalProducts) + 1)}-
-              {offset + productsPerPage}
+              {Math.min(offset + productsPerPage, totalProducts)}
             </strong>{' '}
             of <strong>{totalProducts}</strong> products
           </div>

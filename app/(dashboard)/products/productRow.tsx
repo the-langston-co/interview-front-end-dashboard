@@ -11,19 +11,22 @@ import {
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from '@/app/(dashboard)/actions';
-import { SelectProduct } from '@/lib/db';
+
+import { SelectProduct } from '@/lib/schemas';
 
 export function ProductRow({ product }: { product: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={product.imageUrl}
-          width="64"
-        />
+        {product.imageUrl && (
+          <Image
+            alt="Product image"
+            className="aspect-square rounded-md object-cover"
+            height="64"
+            src={product.imageUrl}
+            width="64"
+          />
+        )}
       </TableCell>
       <TableCell className="font-medium">{product.name}</TableCell>
       <TableCell>

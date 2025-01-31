@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createSelectSchema } from 'drizzle-zod';
-import { productTable, statusEnum } from '@/lib/db';
+import { productTable, statusEnum } from '@/lib/schemas';
 
 export const ProductSchema = createSelectSchema(productTable, {
   status: statusEnum

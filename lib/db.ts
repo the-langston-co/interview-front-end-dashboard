@@ -1,47 +1,19 @@
 import { ProductStatus } from '@/lib/models/Product';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
-import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { and, eq, like, SQL } from 'drizzle-orm';
-import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod';
+import {
+  productCreateSchema,
+  productTable,
+  productUpdateSchema,
+  SelectProduct,
+  usersTable
+} from '@/lib/schemas';
 
 const sqlite = new Database('database/collection.db');
 
 const db = drizzle({ client: sqlite });
-
-export const productTable = sqliteTable('product', {
-  id: integer('id').primaryKey(),
-  imageUrl: text('image_url').notNull(),
-  name: text('name').notNull(),
-  status: text('status').notNull(),
-  price: real('price').notNull(),
-  stock: integer('stock').notNull(),
-  availableAt: text('available_at').notNull()
-});
-
-export const usersTable = sqliteTable('user', {
-  id: integer('id').primaryKey(),
-  email: text('email').notNull(),
-  password: text('password').notNull(),
-  first_name: text('first_name'),
-  last_name: text('last_name'),
-  avatar_url: text('avatar_url'),
-  role: text('role').notNull()
-});
-
-export type SelectUser = typeof usersTable.$inferSelect;
-
-export const statusEnum = z.enum(['active', 'inactive', 'archived']);
-export const productCreateSchema = createInsertSchema(productTable, {
-  status: statusEnum
-});
-
-export const productUpdateSchema = createUpdateSchema(productTable, {
-  status: statusEnum
-});
-
-export type SelectProduct = typeof productTable.$inferSelect;
 
 export async function getProducts({
   search: searchInput,

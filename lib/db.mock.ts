@@ -1,4 +1,4 @@
-import type { SelectUser } from '@/lib/db';
+import { SelectUser } from '@/lib/schemas';
 
 const _users: SelectUser[] = [
   {

@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/react';
 import { SessionProvider } from 'next-auth/react';
 
@@ -20,6 +21,7 @@ export default function RootLayout({
         <body className="flex min-h-screen w-full flex-col">{children}</body>
       </SessionProvider>
       <Analytics />
+      <Toaster richColors />
     </html>
   );
 }
