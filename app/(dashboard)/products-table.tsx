@@ -16,7 +16,6 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { ProductRow } from './productRow';
-import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -31,12 +30,7 @@ export function ProductsTable({
   offset: number;
   totalProducts: number;
 }) {
-  const router = useRouter();
   const productsPerPage = 5;
-
-  function prevPage() {
-    router.back();
-  }
 
   return (
     <Card>
