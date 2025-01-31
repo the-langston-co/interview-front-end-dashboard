@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+
 export function UsersIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -121,6 +123,37 @@ export function VercelLogo(props: React.SVGProps<SVGSVGElement>) {
         d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z"
         fill="currentColor"
       ></path>
+    </svg>
+  );
+}
+
+export function LangstonLogo({
+  height = 120,
+  className
+}: React.SVGProps<SVGSVGElement>) {
+  const logoClasses = cn('text-[#1A5B6B]');
+
+  return (
+    <svg
+      width={height}
+      height={height}
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <g>
+        <path
+          d="M77.5361 119.84H120.123V77.2506L77.5361 119.84Z"
+          className={logoClasses}
+          fill="currentColor"
+        />
+        <path
+          d="M20.7504 -0.00306295H0C6.57663 3.01101 8.32136 16.9112 8.77963 23.2674V96.6917C8.32136 103.048 6.57663 116.947 0 119.961H8.77963V120H44.2721V0.0389165H20.7312L20.7504 -0.00306295Z"
+          className={logoClasses}
+          fill="currentColor"
+        />
+      </g>
     </svg>
   );
 }

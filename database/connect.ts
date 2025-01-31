@@ -18,6 +18,28 @@ const db = new (sqlite3.verbose().Database)(
 
 // Serialize method ensures that database queries are executed sequentially
 db.serialize(() => {
+  // Reset the users table (drop and recreate)
+  db.run('drop table if exists users');
+
+  db.run(`
+  CREATE TABLE users (
+    id integer primary key autoincrement,
+    email text not null unique,
+    password text not null,
+    first_name text default null,
+    last_name text default null,
+    avatar_url text default null,
+    role text CHECK (role IN ('customer', 'admin')) default 'customer' not null
+   )
+  `);
+
+  // Add intial users to database
+  db.run(`
+    INSERT INTO users (email, password, first_name, last_name, avatar_url, role) 
+    VALUES ('test@test.com', 'testing', 'Admin', 'User', 'avatar1.png', 'admin'),
+           ('user@example.com', 'testing', 'Test', 'Example', 'avatar2.png', 'customer')
+  `);
+
   db.run('drop table if exists product');
 
   // Create the items table if it doesn't exist
