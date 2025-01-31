@@ -9,15 +9,6 @@ import {
   ShoppingCart,
   Users2
 } from 'lucide-react';
-
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -26,12 +17,13 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';
-import { User } from './user';
+import { UserDropdown } from './UserDropdown';
 import { LangstonLogo } from '@/components/icons';
 
 import Providers from './providers';
-import { NavItem } from './nav-item';
+import { NavItem } from '@/components/nav-item';
 import { SearchInput } from './search';
+import { DashboardBreadcrumb } from '@/app/(dashboard)/dashboardBreadcrumb';
 
 export default function DashboardLayout({
   children
@@ -47,7 +39,7 @@ export default function DashboardLayout({
             <MobileNav />
             <DashboardBreadcrumb />
             <SearchInput />
-            <User />
+            <UserDropdown />
           </header>
           <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
             {children}
@@ -68,7 +60,7 @@ function DesktopNav() {
           <span className="sr-only">The Langston Co</span>
         </div>
 
-        <NavItem href="#" label="Dashboard">
+        <NavItem href="/" label="Dashboard">
           <Home className="h-5 w-5" />
         </NavItem>
 
@@ -76,7 +68,7 @@ function DesktopNav() {
           <ShoppingCart className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/" label="Products">
+        <NavItem href="/products" label="Products">
           <Package className="h-5 w-5" />
         </NavItem>
 
@@ -162,29 +154,5 @@ function MobileNav() {
         </nav>
       </SheetContent>
     </Sheet>
-  );
-}
-
-function DashboardBreadcrumb() {
-  return (
-    <Breadcrumb className="hidden md:flex">
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="#">Dashboard</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="#">Products</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>All Products</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
   );
 }

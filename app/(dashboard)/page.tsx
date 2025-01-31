@@ -1,27 +1,16 @@
-import { getProducts } from '@/lib/db';
-import { ProductsPage } from './ProductsPage';
-import { ProductStatus } from '@/lib/models/Product';
+import { HomeIcon } from 'lucide-react';
 
-export default async function Page(props: {
-  searchParams: Promise<{
-    q: string;
-    offset: string;
-    // status?: ProductStatus;
-    tab?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const search = searchParams.q ?? '';
-  const offset = searchParams.offset ?? 0;
-  // const status = searchParams.status;
-  const tab = searchParams.tab;
-  const { products, totalProducts } = await getProducts({
-    search: search,
-    offset: Number(offset),
-    status: tab === 'all' ? undefined : (tab as ProductStatus)
-  });
-
+export default async function Page() {
   return (
-    <ProductsPage products={products} totalProducts={totalProducts} tab={tab} />
+    <div
+      className={
+        'text-muted-foreground p-12 border rounded-xl border-dashed text-center flex justify-center items-center max-w-screen-md flex-col'
+      }
+    >
+      <div>
+        <HomeIcon className={'size-6'} />
+      </div>
+      <div>Home page</div>
+    </div>
   );
 }

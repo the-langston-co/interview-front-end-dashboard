@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { handleLogout } from '@/app/login/loginActions';
 
-export async function User() {
+export async function UserDropdown() {
   const session = await auth();
   const user = session?.user;
 
@@ -42,8 +42,10 @@ export async function User() {
         <DropdownMenuSeparator />
         {user ? (
           <DropdownMenuItem>
-            <form action={handleLogout}>
-              <button type="submit">Sign Out</button>
+            <form action={handleLogout} className={'contents'}>
+              <button className={'w-full h-full text-left'} type="submit">
+                Sign Out
+              </button>
             </form>
           </DropdownMenuItem>
         ) : (

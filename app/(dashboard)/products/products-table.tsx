@@ -20,6 +20,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { SelectProduct } from '@/lib/db';
+import { usePathname } from 'next/navigation';
 
 export function ProductsTable({
   products,
@@ -31,6 +32,7 @@ export function ProductsTable({
   totalProducts: number;
 }) {
   const productsPerPage = 5;
+  const pathname = usePathname();
 
   return (
     <Card>
@@ -80,8 +82,8 @@ export function ProductsTable({
             <Link
               href={
                 offset <= productsPerPage
-                  ? '/'
-                  : `/?offset=${Math.max(offset - productsPerPage, 0)}`
+                  ? '#'
+                  : `${pathname}/?offset=${Math.max(offset - productsPerPage, 0)}`
               }
             >
               <Button
@@ -98,7 +100,7 @@ export function ProductsTable({
               href={
                 offset + productsPerPage > totalProducts
                   ? '#'
-                  : `/?offset=${offset + productsPerPage}`
+                  : `${pathname}?offset=${offset + productsPerPage}`
               }
             >
               <Button

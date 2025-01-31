@@ -56,19 +56,13 @@ export function ProductsPage({
           </Button>
         </div>
       </div>
-      {/*<TabsContent value="all">*/}
-      {/*  <ProductsTable*/}
-      {/*    products={products}*/}
-      {/*    offset={newOffset ?? 0}*/}
-      {/*    totalProducts={totalProducts}*/}
-      {/*  />*/}
-      {/*</TabsContent>*/}
-      {/*  Implement Active, Draft, Archived tab contents */}
-      <ProductsTable
-        products={products}
-        offset={offset}
-        totalProducts={totalProducts}
-      />
+      <div className={'mt-4'}>
+        <ProductsTable
+          products={products}
+          offset={offset}
+          totalProducts={totalProducts}
+        />
+      </div>
     </Tabs>
   );
 }
