@@ -9,7 +9,7 @@
     "prettier:fix": "prettier --write \"**/*.{ts,css,js,json,tsx,jsx}\" --list-different",
     "prettier": "prettier \"**/*.{ts,css,js,json,tsx,jsx}\" --list-different ",
     "ts:check": "tsc --noEmit",
-    "db:seed": "ts-node-esm -r tsconfig-paths/register database/connect.ts ",
+    "db:seed": "ts-node -r tsconfig-paths/register database/connect.ts",
     "toc:update": "markdown-toc README.md -i"
   },
   "dependencies": {
