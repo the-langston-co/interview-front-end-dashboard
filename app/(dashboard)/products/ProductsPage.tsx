@@ -3,7 +3,7 @@ import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { File, PlusCircle } from 'lucide-react';
-import { ProductsTable } from './products-table';
+import { ProductsTable } from './ProductsTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { SelectProduct } from '@/lib/db';
 

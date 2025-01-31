@@ -21,7 +21,7 @@ import { UserDropdown } from './UserDropdown';
 import { LangstonLogo } from '@/components/icons';
 
 import Providers from './providers';
-import { NavItem } from '@/components/nav-item';
+import { NavItem } from '@/components/NavItem';
 import { SearchInput } from './search';
 import { DashboardBreadcrumb } from '@/app/(dashboard)/dashboardBreadcrumb';
 
