@@ -77,30 +77,34 @@ export function ProductsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {Math.max(
-                0,
-                Math.min(offset - productsPerPage, totalProducts) + 1
-              )}
-              -{offset}
+              {Math.max(0, Math.min(offset, totalProducts) + 1)}-
+              {offset + productsPerPage}
             </strong>{' '}
             of <strong>{totalProducts}</strong> products
           </div>
           <div className="flex">
-            <Button
-              onClick={() => prevPage()}
-              variant="ghost"
-              size="sm"
-              type="submit"
-              disabled={offset === productsPerPage}
+            <Link
+              href={
+                offset <= productsPerPage
+                  ? '/'
+                  : `/?offset=${Math.max(offset - productsPerPage, 0)}`
+              }
             >
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              Prev
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                type="submit"
+                disabled={offset === 0}
+              >
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Prev
+              </Button>
+            </Link>
             <Link
               href={
                 offset + productsPerPage > totalProducts
                   ? '#'
-                  : `/?offset=${offset}`
+                  : `/?offset=${offset + productsPerPage}`
               }
             >
               <Button

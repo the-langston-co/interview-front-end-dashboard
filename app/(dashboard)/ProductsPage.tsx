@@ -9,7 +9,6 @@ import { SelectProduct } from '@/lib/db';
 
 export type ProductsPageProps = {
   products: SelectProduct[];
-  newOffset: number | null;
   totalProducts: number;
   tab?: string;
 };
@@ -17,14 +16,13 @@ export type ProductsPageProps = {
 export function ProductsPage({
   products,
   totalProducts,
-  newOffset,
   tab = 'all'
 }: ProductsPageProps) {
   const router = useRouter();
   const pathname = usePathname();
 
   const searchParams = useSearchParams();
-
+  const offset = Number(searchParams.get('offset') ?? 0);
   return (
     <Tabs
       value={tab}
@@ -68,7 +66,7 @@ export function ProductsPage({
       {/*  Implement Active, Draft, Archived tab contents */}
       <ProductsTable
         products={products}
-        offset={newOffset ?? 0}
+        offset={offset}
         totalProducts={totalProducts}
       />
     </Tabs>

@@ -5,7 +5,7 @@ function mockProduct(id: number, status?: ProductStatus): Product {
   const defaultStatus = statusEnum.options[id % statusEnum.options.length];
 
   return {
-    availableAt: faker.date.past(),
+    availableAt: faker.date.past().getTime().toString(),
     imageUrl: `https://picsum.photos/seed/${id}/200/300`,
     name: faker.commerce.productName(),
     price: Number.parseFloat(faker.commerce.price({ max: 199 })),
@@ -24,7 +24,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 999.0,
     stock: 150,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 199.0,
     stock: 300,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ export const mockProducts: Product[] = [
     status: 'inactive',
     price: 149.0,
     stock: 200,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 799.0,
     stock: 50,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 5,
@@ -64,7 +64,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 1299.0,
     stock: 75,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 6,
@@ -74,7 +74,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 349.0,
     stock: 120,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 7,
@@ -84,7 +84,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 249.0,
     stock: 250,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 8,
@@ -94,7 +94,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 99.0,
     stock: 400,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 9,
@@ -104,7 +104,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 59.0,
     stock: 500,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   {
     id: 10,
@@ -114,7 +114,7 @@ export const mockProducts: Product[] = [
     status: 'active',
     price: 199.0,
     stock: 175,
-    availableAt: new Date()
+    availableAt: new Date().getTime().toString()
   },
   ...new Array(250).fill(0).map<Product>((_, i) => mockProduct(i + 11))
 ];

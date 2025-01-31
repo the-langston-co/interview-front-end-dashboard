@@ -15,18 +15,13 @@ export default async function Page(props: {
   const offset = searchParams.offset ?? 0;
   // const status = searchParams.status;
   const tab = searchParams.tab;
-  const { products, newOffset, totalProducts } = await getProducts({
+  const { products, totalProducts } = await getProducts({
     search: search,
     offset: Number(offset),
     status: tab === 'all' ? undefined : (tab as ProductStatus)
   });
 
   return (
-    <ProductsPage
-      products={products}
-      newOffset={newOffset}
-      totalProducts={totalProducts}
-      tab={tab}
-    />
+    <ProductsPage products={products} totalProducts={totalProducts} tab={tab} />
   );
 }

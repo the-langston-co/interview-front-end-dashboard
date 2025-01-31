@@ -8,7 +8,7 @@ const sqlite = new Database('database/collection.db');
 
 const db = drizzle({ client: sqlite });
 
-export const productSchema = sqliteTable('product', {
+export const productTable = sqliteTable('product', {
   id: integer('id').primaryKey(),
   imageUrl: text('image_url').notNull(),
   name: text('name').notNull(),
@@ -18,7 +18,7 @@ export const productSchema = sqliteTable('product', {
   availableAt: text('available_at').notNull()
 });
 
-export type SelectProduct = typeof productSchema.$inferSelect;
+export type SelectProduct = typeof productTable.$inferSelect;
 
 export async function getProducts({
   search: searchInput,
@@ -32,40 +32,40 @@ export async function getProducts({
   pageSize?: number;
 }): Promise<{
   products: SelectProduct[];
-  newOffset: number | null;
   totalProducts: number;
+  hasMore?: boolean;
 }> {
   const filters: SQL[] = [];
   if (status) {
-    filters.push(eq(productSchema.status, status));
+    filters.push(eq(productTable.status, status));
   }
 
   const search = searchInput?.trim().toLowerCase();
   if (search) {
-    filters.push(like(productSchema.name, `%${search}%`));
+    filters.push(like(productTable.name, `%${search}%`));
   }
 
   const products = await db
     .select()
-    .from(productSchema)
+    .from(productTable)
     .where(and(...filters))
     .offset(offset)
     .limit(pageSize + 1);
-  // Always search the full table, not per page
 
-  const totalCount = await db.$count(productSchema, and(...filters));
-
-  // const moreProducts = products.slice(offset, offset + 5);
-  const newOffset = offset + products.length - 1;
+  const totalCount = await db.$count(productTable, and(...filters));
 
   return {
     products: products.slice(0, pageSize),
-    newOffset,
-    totalProducts: totalCount
+
+    totalProducts: totalCount,
+    hasMore: totalCount > offset + products.length
   };
 }
 
 export async function deleteProductById(id: number) {
-  console.log(`deleting product ${id}`);
-  await db.delete(productSchema).where(eq(productSchema.id, id));
+  await db.delete(productTable).where(eq(productTable.id, id));
+}
+
+export async function getProductById(id: number) {
+  return db.select().from(productTable).where(eq(productTable.id, id));
 }

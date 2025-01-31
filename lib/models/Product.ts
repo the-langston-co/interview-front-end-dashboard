@@ -1,15 +1,11 @@
 import { z } from 'zod';
+import { createSelectSchema } from 'drizzle-zod';
+import { productTable } from '@/lib/db';
 
 export const statusEnum = z.enum(['active', 'inactive', 'archived']);
 
-export const ProductSchema = z.object({
-  id: z.number(),
-  imageUrl: z.string().url(),
-  name: z.string(),
-  status: statusEnum,
-  price: z.number(),
-  stock: z.number().int(),
-  availableAt: z.date()
+export const ProductSchema = createSelectSchema(productTable, {
+  status: statusEnum
 });
 
 export type Product = z.infer<typeof ProductSchema>;
