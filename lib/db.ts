@@ -3,6 +3,8 @@ import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { and, eq, like, SQL } from 'drizzle-orm';
+import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 const sqlite = new Database('database/collection.db');
 
@@ -29,6 +31,15 @@ export const usersTable = sqliteTable('user', {
 });
 
 export type SelectUser = typeof usersTable.$inferSelect;
+
+export const statusEnum = z.enum(['active', 'inactive', 'archived']);
+export const productCreateSchema = createInsertSchema(productTable, {
+  status: statusEnum
+});
+
+export const productUpdateSchema = createUpdateSchema(productTable, {
+  status: statusEnum
+});
 
 export type SelectProduct = typeof productTable.$inferSelect;
 
@@ -84,4 +95,27 @@ export async function getProductById(id: number) {
 
 export async function getUserById(id: number) {
   return db.select().from(usersTable).where(eq(usersTable.id, id));
+}
+
+export async function updateProduct(
+  id: number,
+  dto: z.infer<typeof productUpdateSchema>
+) {
+  const result = await db
+    .update(productTable)
+    .set(dto)
+    .where(eq(productTable.id, id));
+  if (result.changes) {
+    return getProductById(id);
+  }
+  throw new Error('Product not found');
+}
+
+export async function createProduct(dto: z.infer<typeof productCreateSchema>) {
+  const result = await db.insert(productTable).values(dto);
+
+  if (result.lastInsertRowid) {
+    return getProductById(Number(result.lastInsertRowid));
+  }
+  throw new Error('Product not found');
 }
