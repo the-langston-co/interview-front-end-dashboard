@@ -1,8 +1,15 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthConfig } from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { getUserByCredentials } from '@/lib/db.mock';
+import { z } from 'zod';
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+const credentialsSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(4)
+});
+
+export const nextAuthConfig: NextAuthConfig = {
   providers: [
     GitHub,
     CredentialsProvider({
@@ -13,16 +20,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: 'Email', type: 'text', placeholder: 'jsmith' },
+        email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' };
-
+        const parsed = credentialsSchema.parse(credentials);
+        const user = await getUserByCredentials(parsed);
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          return user;
+          return { ...user, id: `${user.id}` };
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null;
@@ -32,4 +39,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     })
   ]
-});
+};
+
+export const { handlers, signIn, signOut, auth } = NextAuth(nextAuthConfig);

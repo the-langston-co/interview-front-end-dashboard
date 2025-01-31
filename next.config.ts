@@ -1,4 +1,9 @@
-export default {
+import { NextConfig } from 'next';
+
+const config: NextConfig = {
+  experimental: {
+    // edg
+  },
   images: {
     remotePatterns: [
       {
@@ -19,3 +24,5 @@ export default {
     ]
   }
 };
+
+export default config;;

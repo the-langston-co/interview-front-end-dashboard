@@ -18,6 +18,18 @@ export const productTable = sqliteTable('product', {
   availableAt: text('available_at').notNull()
 });
 
+export const usersTable = sqliteTable('user', {
+  id: integer('id').primaryKey(),
+  email: text('email').notNull(),
+  password: text('password').notNull(),
+  first_name: text('first_name'),
+  last_name: text('last_name'),
+  avatar_url: text('avatar_url'),
+  role: text('role').notNull()
+});
+
+export type SelectUser = typeof usersTable.$inferSelect;
+
 export type SelectProduct = typeof productTable.$inferSelect;
 
 export async function getProducts({
@@ -68,4 +80,8 @@ export async function deleteProductById(id: number) {
 
 export async function getProductById(id: number) {
   return db.select().from(productTable).where(eq(productTable.id, id));
+}
+
+export async function getUserById(id: number) {
+  return db.select().from(usersTable).where(eq(usersTable.id, id));
 }

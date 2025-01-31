@@ -1,7 +1,6 @@
 'use client';
-import React from 'react';
-import { signIn } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+import React, { useActionState } from 'react';
+
 import {
   Card,
   CardDescription,
@@ -10,26 +9,17 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { handleLogin, LoginState } from '@/app/login/loginActions';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+const initialState: LoginState = { message: null };
 
 export function LoginForm() {
-  async function handleLogin(formData: FormData) {
-    const email = formData.get('email')?.toString() || '';
-    const password = formData.get('password')?.toString() || '';
-
-    // Use next-auth credentials sign-in
-    const result = await signIn('credentials', {
-      redirect: false, // Do not redirect automatically
-      email,
-      password
-    });
-
-    if (result?.error) {
-      throw new Error(result.error); // Improper credentials
-    }
-
-    // Redirect user to the homepage after successful login
-    redirect('/');
-  }
+  const [state, formAction, pending] = useActionState(
+    handleLogin,
+    initialState
+  );
 
   return (
     <div className="min-h-screen flex justify-center items-start md:items-center p-8">
@@ -41,15 +31,15 @@ export function LoginForm() {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <form action={handleLogin} className="w-full">
+          <form action={formAction} className="w-full">
             <div className="mb-4">
-              <label
+              <Label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
                 Email
-              </label>
-              <input
+              </Label>
+              <Input
                 className="mt-1 form-input block w-full border-gray-300 rounded-md shadow-sm"
                 type="email"
                 id="email"
@@ -58,13 +48,13 @@ export function LoginForm() {
               />
             </div>
             <div className="mb-6">
-              <label
+              <Label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
                 Password
-              </label>
-              <input
+              </Label>
+              <Input
                 className="mt-1 form-input block w-full border-gray-300 rounded-md shadow-sm"
                 type="password"
                 id="password"
@@ -72,9 +62,12 @@ export function LoginForm() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
-              Sign in
+            <Button type="submit" className="w-full" disabled={pending}>
+              {pending ? 'Loading...' : 'Sign in'}
             </Button>
+            {state.message && (
+              <p className="mt-2 text-sm text-red-600">{state.message}</p>
+            )}
           </form>
         </CardFooter>
       </Card>
