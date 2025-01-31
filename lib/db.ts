@@ -1,54 +1,34 @@
-import 'server-only';
+import { Product, ProductStatus, productStore } from '@/lib/models/Product';
+import { sleep } from '@/lib/utils';
 
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-import {
-  pgTable,
-  text,
-  numeric,
-  integer,
-  timestamp,
-  pgEnum,
-  serial
-} from 'drizzle-orm/pg-core';
-import { count, eq, ilike } from 'drizzle-orm';
-import { createInsertSchema } from 'drizzle-zod';
-
-export const db = drizzle(neon(process.env.POSTGRES_URL!));
-
-export const statusEnum = pgEnum('status', ['active', 'inactive', 'archived']);
-
-export const products = pgTable('products', {
-  id: serial('id').primaryKey(),
-  imageUrl: text('image_url').notNull(),
-  name: text('name').notNull(),
-  status: statusEnum('status').notNull(),
-  price: numeric('price', { precision: 10, scale: 2 }).notNull(),
-  stock: integer('stock').notNull(),
-  availableAt: timestamp('available_at').notNull()
-});
-
-export type SelectProduct = typeof products.$inferSelect;
-export const insertProductSchema = createInsertSchema(products);
-
-export async function getProducts(
-  search: string,
-  offset: number
-): Promise<{
-  products: SelectProduct[];
+export async function getProducts({
+  search,
+  offset = 0,
+  pageSize = 5,
+  status
+}: {
+  search: string;
+  offset?: number;
+  status?: ProductStatus;
+  pageSize?: number;
+}): Promise<{
+  products: Product[];
   newOffset: number | null;
   totalProducts: number;
 }> {
+  const products = status
+    ? productStore.products.filter((p) => p.status === status)
+    : productStore.products;
+
   // Always search the full table, not per page
   if (search) {
+    const filteredProducts = products.filter((p) =>
+      p.name?.toLowerCase().includes(search.toLowerCase())
+    );
     return {
-      products: await db
-        .select()
-        .from(products)
-        .where(ilike(products.name, `%${search}%`))
-        .limit(1000),
-      newOffset: null,
-      totalProducts: 0
+      products: filteredProducts.slice(offset, pageSize + offset),
+      newOffset: offset + pageSize,
+      totalProducts: filteredProducts.length
     };
   }
 
@@ -56,17 +36,17 @@ export async function getProducts(
     return { products: [], newOffset: null, totalProducts: 0 };
   }
 
-  let totalProducts = await db.select({ count: count() }).from(products);
-  let moreProducts = await db.select().from(products).limit(5).offset(offset);
-  let newOffset = moreProducts.length >= 5 ? offset + 5 : null;
+  const totalProducts = products.length;
+  const moreProducts = products.slice(offset, offset + 5);
+  const newOffset = moreProducts.length >= 5 ? offset + 5 : null;
 
   return {
     products: moreProducts,
     newOffset,
-    totalProducts: totalProducts[0].count
+    totalProducts: totalProducts
   };
 }
 
 export async function deleteProductById(id: number) {
-  await db.delete(products).where(eq(products.id, id));
+  await productStore.deleteProduct(id);
 }

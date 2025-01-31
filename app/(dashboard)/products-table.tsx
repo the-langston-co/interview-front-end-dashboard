@@ -15,30 +15,27 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { Product } from './product';
-import { SelectProduct } from '@/lib/db';
+import { ProductRow } from './productRow';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Product } from '@/lib/models/Product';
+import Link from 'next/link';
 
 export function ProductsTable({
   products,
   offset,
   totalProducts
 }: {
-  products: SelectProduct[];
+  products: Product[];
   offset: number;
   totalProducts: number;
 }) {
-  let router = useRouter();
-  let productsPerPage = 5;
+  const router = useRouter();
+  const productsPerPage = 5;
 
   function prevPage() {
     router.back();
-  }
-
-  function nextPage() {
-    router.push(`/?offset=${offset}`, { scroll: false });
   }
 
   return (
@@ -70,7 +67,7 @@ export function ProductsTable({
           </TableHeader>
           <TableBody>
             {products.map((product) => (
-              <Product key={product.id} product={product} />
+              <ProductRow key={product.id} product={product} />
             ))}
           </TableBody>
         </Table>
@@ -80,13 +77,17 @@ export function ProductsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {Math.max(0, Math.min(offset - productsPerPage, totalProducts) + 1)}-{offset}
+              {Math.max(
+                0,
+                Math.min(offset - productsPerPage, totalProducts) + 1
+              )}
+              -{offset}
             </strong>{' '}
             of <strong>{totalProducts}</strong> products
           </div>
           <div className="flex">
             <Button
-              formAction={prevPage}
+              onClick={() => prevPage()}
               variant="ghost"
               size="sm"
               type="submit"
@@ -95,16 +96,23 @@ export function ProductsTable({
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
             </Button>
-            <Button
-              formAction={nextPage}
-              variant="ghost"
-              size="sm"
-              type="submit"
-              disabled={offset + productsPerPage > totalProducts}
+            <Link
+              href={
+                offset + productsPerPage > totalProducts
+                  ? '#'
+                  : `/?offset=${offset}`
+              }
             >
-              Next
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                type="submit"
+                disabled={offset + productsPerPage > totalProducts}
+              >
+                Next
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </form>
       </CardFooter>
