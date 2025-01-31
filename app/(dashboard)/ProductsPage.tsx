@@ -1,14 +1,14 @@
 'use client';
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { File, PlusCircle } from 'lucide-react';
 import { ProductsTable } from './products-table';
-import { Product } from '@/lib/models/Product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { SelectProduct } from '@/lib/db';
 
 export type ProductsPageProps = {
-  products: Product[];
+  products: SelectProduct[];
   newOffset: number | null;
   totalProducts: number;
   tab?: string;

@@ -21,8 +21,6 @@ export default async function Page(props: {
     status: tab === 'all' ? undefined : (tab as ProductStatus)
   });
 
-  console.log('products', { products });
-
   return (
     <ProductsPage
       products={products}

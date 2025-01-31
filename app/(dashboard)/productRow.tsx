@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
+import { deleteProduct } from '@/app/(dashboard)/actions';
+import { SelectProduct } from '@/lib/db';
 
-import { Product, productStore } from '@/lib/models/Product';
-
-export function ProductRow({ product }: { product: Product }) {
+export function ProductRow({ product }: { product: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -34,7 +34,7 @@ export function ProductRow({ product }: { product: Product }) {
       <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
       <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {product.availableAt.toLocaleDateString('en-US')}
+        {new Date(Number(product.availableAt)).toLocaleDateString('en-US')}
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -48,8 +48,11 @@ export function ProductRow({ product }: { product: Product }) {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>
-              <form onSubmit={() => productStore.deleteProduct(product.id)}>
-                <button type="submit">Delete</button>
+              <form action={deleteProduct} className={'contents'}>
+                <input type="hidden" name="id" value={product.id} />
+                <button type="submit" className={'w-full h-full text-left'}>
+                  Delete
+                </button>
               </form>
             </DropdownMenuItem>
           </DropdownMenuContent>

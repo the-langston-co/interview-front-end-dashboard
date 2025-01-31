@@ -1,8 +1,27 @@
-import { Product, ProductStatus, productStore } from '@/lib/models/Product';
-import { sleep } from '@/lib/utils';
+import { ProductStatus } from '@/lib/models/Product';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import Database from 'better-sqlite3';
+import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { and, eq, like, SQL } from 'drizzle-orm';
+
+const sqlite = new Database('database/collection.db');
+
+const db = drizzle({ client: sqlite });
+
+export const productSchema = sqliteTable('product', {
+  id: integer('id').primaryKey(),
+  imageUrl: text('image_url').notNull(),
+  name: text('name').notNull(),
+  status: text('status').notNull(),
+  price: real('price').notNull(),
+  stock: integer('stock').notNull(),
+  availableAt: text('available_at').notNull()
+});
+
+export type SelectProduct = typeof productSchema.$inferSelect;
 
 export async function getProducts({
-  search,
+  search: searchInput,
   offset = 0,
   pageSize = 5,
   status
@@ -12,41 +31,41 @@ export async function getProducts({
   status?: ProductStatus;
   pageSize?: number;
 }): Promise<{
-  products: Product[];
+  products: SelectProduct[];
   newOffset: number | null;
   totalProducts: number;
 }> {
-  const products = status
-    ? productStore.products.filter((p) => p.status === status)
-    : productStore.products;
+  const filters: SQL[] = [];
+  if (status) {
+    filters.push(eq(productSchema.status, status));
+  }
 
-  // Always search the full table, not per page
+  const search = searchInput?.trim().toLowerCase();
   if (search) {
-    const filteredProducts = products.filter((p) =>
-      p.name?.toLowerCase().includes(search.toLowerCase())
-    );
-    return {
-      products: filteredProducts.slice(offset, pageSize + offset),
-      newOffset: offset + pageSize,
-      totalProducts: filteredProducts.length
-    };
+    filters.push(like(productSchema.name, `%${search}%`));
   }
 
-  if (offset === null) {
-    return { products: [], newOffset: null, totalProducts: 0 };
-  }
+  const products = await db
+    .select()
+    .from(productSchema)
+    .where(and(...filters))
+    .offset(offset)
+    .limit(pageSize + 1);
+  // Always search the full table, not per page
 
-  const totalProducts = products.length;
-  const moreProducts = products.slice(offset, offset + 5);
-  const newOffset = moreProducts.length >= 5 ? offset + 5 : null;
+  const totalCount = await db.$count(productSchema, and(...filters));
+
+  // const moreProducts = products.slice(offset, offset + 5);
+  const newOffset = offset + products.length - 1;
 
   return {
-    products: moreProducts,
+    products: products.slice(0, pageSize),
     newOffset,
-    totalProducts: totalProducts
+    totalProducts: totalCount
   };
 }
 
 export async function deleteProductById(id: number) {
-  await productStore.deleteProduct(id);
+  console.log(`deleting product ${id}`);
+  await db.delete(productSchema).where(eq(productSchema.id, id));
 }

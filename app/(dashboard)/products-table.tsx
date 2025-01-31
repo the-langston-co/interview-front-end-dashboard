@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  TableHead,
-  TableRow,
-  TableHeader,
+  Table,
   TableBody,
-  Table
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import {
   Card,
@@ -19,15 +19,15 @@ import { ProductRow } from './productRow';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Product } from '@/lib/models/Product';
 import Link from 'next/link';
+import { SelectProduct } from '@/lib/db';
 
 export function ProductsTable({
   products,
   offset,
   totalProducts
 }: {
-  products: Product[];
+  products: SelectProduct[];
   offset: number;
   totalProducts: number;
 }) {
