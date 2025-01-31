@@ -38,7 +38,24 @@ export const nextAuthConfig: NextAuthConfig = {
         }
       }
     })
-  ]
+  ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+        token.picture = user.avatar_url;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (session.user && token.role) {
+        session.user.role = token.role;
+        session.user.avatar_url = token.picture ?? null;
+      }
+
+      return session;
+    }
+  }
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth(nextAuthConfig);

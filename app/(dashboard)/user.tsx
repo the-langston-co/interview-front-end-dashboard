@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { auth, signOut } from '@/lib/auth';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -10,6 +9,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { auth } from '@/lib/auth';
+import { handleLogout } from '@/app/login/loginActions';
 
 export async function User() {
   const session = await auth();
@@ -28,6 +29,7 @@ export async function User() {
             width={36}
             height={36}
             alt="Avatar"
+            key={user?.id}
             className="overflow-hidden rounded-full"
           />
         </Button>
@@ -40,12 +42,7 @@ export async function User() {
         <DropdownMenuSeparator />
         {user ? (
           <DropdownMenuItem>
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
-            >
+            <form action={handleLogout}>
               <button type="submit">Sign Out</button>
             </form>
           </DropdownMenuItem>

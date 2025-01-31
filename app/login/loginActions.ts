@@ -1,5 +1,5 @@
 'use server';
-import { signIn } from '@/lib/auth';
+import { signIn, signOut } from '@/lib/auth';
 import { sleep } from '@/lib/utils';
 import { redirect } from 'next/navigation';
 
@@ -23,4 +23,8 @@ export async function handleLogin(prevState: LoginState, formData: FormData) {
 
   // Redirect user to the homepage after successful login
   redirect('/');
+}
+
+export async function handleLogout() {
+  await signOut();
 }
