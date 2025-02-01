@@ -46,6 +46,10 @@ This codebase uses the following stack:
 - Analytics - [Vercel Analytics](https://vercel.com/analytics)
 - Formatting - [Prettier](https://prettier.io)
 
+
+![](public/dashboard-screenshot.png)
+*A screenshot of the application*
+
 ## Project setup
 
 ### Installation
