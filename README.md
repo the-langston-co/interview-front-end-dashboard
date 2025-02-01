@@ -21,6 +21,7 @@ Follow the instructions in **Project Setup** to get up and running, then work th
   * [Installation](#installation)
   * [Create seed data](#create-seed-data)
   * [Start the application](#start-the-application)
+- [API Routes](#api-routes)
 - [Tasks](#tasks)
   * [Edit a product](#edit-a-product)
   * [Create a product](#create-a-product)
@@ -51,7 +52,7 @@ This codebase uses the following stack:
 
 First, ensure you have Node 18 (or higher) installed.
 
-> [!TIP] 
+> [!TIP]
 > [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) is a great tool to easily manage multiple
 > versions of node
 > via the command line
@@ -84,6 +85,15 @@ npm run dev
 ```
 
 You should now be able to access the application at http://localhost:3000.
+
+## API Routes
+
+This project has a couple API routes that you are welcome to use. These are defined as Next.js `routes` in the `api` directory. 
+
+| Method | Path                        | Description                | Response                                                                                         |
+|--------|-----------------------------|----------------------------|--------------------------------------------------------------------------------------------------|
+| `POST` | `/api/products`             | Create a new product       | 201: Newly created product data<br>400: Payload validation error<br>500: Unexpected Server error |
+| `PUT`  | `/api/products/:product_id` | Update an existing product | 200: Updated product data<br>400: Payoad validation error<br>500: Unexpected server error        |
 
 ## Tasks
 
