@@ -124,8 +124,13 @@ As a user, I must have the appropriate permissions in order to edit a project. I
 I should not be able to access the edit functionality.
 For testing, you can log in as an admin using the following credentials:
 
-```
+```bash
+# 'admin' credentials
 email: admin@test.com
+password: testing
+
+# 'customer' credentials
+email: test@example.com
 password: testing
 ```
 
