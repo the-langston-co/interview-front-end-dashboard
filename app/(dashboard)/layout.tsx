@@ -23,7 +23,7 @@ import { LangstonLogo } from '@/components/icons';
 import Providers from './providers';
 import { NavItem } from '@/components/NavItem';
 import { SearchInput } from './search';
-import { DashboardBreadcrumb } from '@/app/(dashboard)/dashboardBreadcrumb';
+import { DashboardBreadcrumb } from '@/app/(dashboard)/DashboardBreadcrumb';
 
 export default function DashboardLayout({
   children
