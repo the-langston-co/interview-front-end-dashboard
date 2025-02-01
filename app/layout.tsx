@@ -18,10 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <body className="flex min-h-screen w-full flex-col">{children}</body>
+        <body className="flex min-h-screen w-full flex-col">
+          {children}
+          <Toaster richColors />
+        </body>
       </SessionProvider>
       <Analytics />
-      <Toaster richColors />
     </html>
   );
 }
