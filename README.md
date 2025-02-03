@@ -146,4 +146,4 @@ link in the User dropdown menu.
 
 ### Show a confirmation message before deleting a product
 
-As a user, I want to have a change to confirm I want to delete a product in case I pushed the button on accident.
+As a user, I want to have a chance to confirm I want to delete a product in case I pushed the button on accident.
