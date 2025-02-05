@@ -6,6 +6,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix ; npm run prettier:fix ; npm run ts:check",
+    "test": "vitest run",
     "prettier:fix": "prettier --write \"**/*.{ts,css,js,json,tsx,jsx}\" --list-different",
     "prettier": "prettier \"**/*.{ts,css,js,json,tsx,jsx}\" --list-different ",
     "ts:check": "tsc --noEmit",
@@ -64,10 +65,14 @@
     "@types/better-sqlite3": "^7.6.12",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "drizzle-kit": "^0.30.4",
     "eslint": "9.19.0",
     "eslint-config-next": "15.1.6",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "markdown-toc": "^1.2.0"
+    "jsdom": "^26.0.0",
+    "markdown-toc": "^1.2.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
   }
 }

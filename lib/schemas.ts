@@ -1,4 +1,4 @@
-import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
+import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
@@ -24,6 +24,7 @@ export type SelectUser = typeof usersTable.$inferSelect;
 export const statusEnum = z.enum(['active', 'inactive', 'archived']);
 
 const schemaRefinements = {
+  name: z.string().min(2, 'Required'),
   status: statusEnum,
   price: z
     .union([z.string(), z.number()])
@@ -35,15 +36,10 @@ const schemaRefinements = {
     .pipe(z.coerce.number())
 };
 
-export const productCreateSchema = createInsertSchema(
+export const productSchema = createInsertSchema(
   productTable,
   schemaRefinements
 );
-
-export const productUpdateSchema = createUpdateSchema(productTable, {
-  status: statusEnum,
-  schema: schemaRefinements
-});
 
 export type Product = typeof productTable.$inferSelect;
 export type ProductStatus = z.infer<typeof statusEnum>;

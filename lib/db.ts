@@ -3,10 +3,9 @@ import Database from 'better-sqlite3';
 import { and, eq, like, SQL } from 'drizzle-orm';
 import { z } from 'zod';
 import {
-  productCreateSchema,
+  productSchema,
   ProductStatus,
   productTable,
-  productUpdateSchema,
   Product,
   usersTable
 } from '@/lib/schemas';
@@ -71,7 +70,7 @@ export async function getUserById(id: number) {
 
 export async function updateProduct(
   id: number,
-  dto: z.infer<typeof productUpdateSchema>
+  dto: z.infer<typeof productSchema>
 ) {
   const result = await db
     .update(productTable)
@@ -83,7 +82,15 @@ export async function updateProduct(
   throw new Error('Product not found');
 }
 
-export async function createProduct(dto: z.infer<typeof productCreateSchema>) {
+export async function deleteProduct(id: number) {
+  const result = await db.delete(productTable).where(eq(productTable.id, id));
+  if (!result.changes) {
+    throw new Error('Product not found');
+  }
+  return;
+}
+
+export async function createProduct(dto: z.infer<typeof productSchema>) {
   const result = await db.insert(productTable).values(dto);
 
   if (result.lastInsertRowid) {

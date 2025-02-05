@@ -7,6 +7,7 @@ import { ProductsTable } from './ProductsTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Product } from '@/lib/schemas';
 import { toast } from 'sonner';
+import { CreateProductDialogButton } from '@/app/(dashboard)/products/CreateProductDialogButton';
 
 export type ProductsPageProps = {
   products: Product[];
@@ -61,6 +62,7 @@ export function ProductsPage({
               Add Product
             </span>
           </Button>
+          <CreateProductDialogButton />
         </div>
       </div>
       <div className={'mt-4'}>

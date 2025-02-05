@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createProduct } from '@/lib/db';
-import { productCreateSchema } from '@/lib/schemas';
+import { productSchema } from '@/lib/schemas';
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const dto = productCreateSchema.parse(data);
+    const dto = productSchema.parse(data);
 
     try {
       const created = await createProduct({

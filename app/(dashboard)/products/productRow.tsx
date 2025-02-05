@@ -8,13 +8,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, PencilIcon, Trash2Icon } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { deleteProduct } from '@/app/(dashboard)/actions';
 
 import { Product } from '@/lib/schemas';
+import { toast } from 'sonner';
+import { useProductApi } from '@/hooks/useProductApi';
 
 export function ProductRow({ product }: { product: Product }) {
+  const { deleteProduct } = useProductApi();
+
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -49,14 +52,15 @@ export function ProductRow({ product }: { product: Product }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>
-              <form action={deleteProduct} className={'contents'}>
-                <input type="hidden" name="id" value={product.id} />
-                <button type="submit" className={'w-full h-full text-left'}>
-                  Delete
-                </button>
-              </form>
+            <DropdownMenuItem
+              onClick={() => toast.warning('Edit is not implemented')}
+            >
+              <PencilIcon />
+              Edit product
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteProduct(product)}>
+              <Trash2Icon />
+              Delete product
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

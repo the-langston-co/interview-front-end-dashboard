@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { productCreateSchema, Product } from '@/lib/schemas';
+import { Product, productSchema } from '@/lib/schemas';
 import {
   Form,
   FormControl,
@@ -27,14 +27,14 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { revalidateProducts } from '@/app/(dashboard)/actions';
 import { toast } from 'sonner';
+import { useProductApi } from '@/hooks/useProductApi';
 
 export type CreateProductButtonProps = {
   afterSave?: (product: Product) => void;
 };
 
-type FormValues = z.input<typeof productCreateSchema>;
+type FormValues = z.input<typeof productSchema>;
 
 const initialValues: FormValues = {
   name: '',
@@ -49,31 +49,23 @@ export function CreateProductDialogButton({
   afterSave
 }: CreateProductButtonProps) {
   const [open, setOpen] = useState(false);
-
+  const { createProduct } = useProductApi();
   const form = useForm<FormValues>({
     defaultValues: initialValues,
-    resolver: zodResolver(productCreateSchema)
+    resolver: zodResolver(productSchema)
   });
 
   async function handleSubmit(data: FormValues) {
-    console.log({ formValues: data });
-    const response = await fetch('api/products', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (response.ok) {
+    try {
+      const saved = await createProduct(data);
       setOpen(false);
-      const saved = await response.json();
       afterSave?.(saved);
-      await revalidateProducts();
       form.reset();
       toast.success('Product created successfully');
-    } else {
-      toast.error('Unable to create product');
+    } catch (error) {
+      toast.error('Unable to create product', {
+        description: (error as Error).message
+      });
     }
   }
 
@@ -89,14 +81,14 @@ export function CreateProductDialogButton({
           </Button>
         </DialogTrigger>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create product</DialogTitle>
-            <DialogDescription className={'sr-only'}>
-              Configure a new product
-            </DialogDescription>
-          </DialogHeader>
-          <DialogBody>
-            <Form {...form}>
+          <Form {...form}>
+            <DialogHeader>
+              <DialogTitle>Create product</DialogTitle>
+              <DialogDescription className={'sr-only'}>
+                Configure a new product
+              </DialogDescription>
+            </DialogHeader>
+            <DialogBody>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className={'space-y-6'}
@@ -158,23 +150,23 @@ export function CreateProductDialogButton({
                   )}
                 />
               </form>
-            </Form>
-          </DialogBody>
-          <DialogFooter className={'space-x-4 flex items-center'}>
-            <DialogClose asChild>
-              <Button size={'sm'} variant={'outline'}>
-                Cancel
+            </DialogBody>
+            <DialogFooter className={'space-x-4 flex items-center'}>
+              <DialogClose asChild>
+                <Button size={'sm'} variant={'outline'}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button
+                size="sm"
+                variant="default"
+                type={'submit'}
+                form={'create-product-form'}
+              >
+                Submit
               </Button>
-            </DialogClose>
-            <Button
-              size="sm"
-              variant="default"
-              type={'submit'}
-              form={'create-product-form'}
-            >
-              Submit
-            </Button>
-          </DialogFooter>
+            </DialogFooter>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
