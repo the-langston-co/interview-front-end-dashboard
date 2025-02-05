@@ -35,17 +35,19 @@ Follow the instructions in **Project Setup** to get up and running, then work th
 
 ## Overview
 
-This codebase uses the following stack:
+This exercise is primarily focused on the following:
 
 - Framework - [Next.js (App Router)](https://nextjs.org)
 - Language - [TypeScript](https://www.typescriptlang.org)
+- Components - [Shadcn UI](https://ui.shadcn.com/)
+- Styling - [Tailwind CSS](https://tailwindcss.com)
+
+For context, is also users the following tech:
 - Auth - [Auth.js](https://authjs.dev)
 - Database - [Sqlite with Drizzle ORM](https://orm.drizzle.team/docs/get-started-sqlite)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Shadcn UI](https://ui.shadcn.com/)
 - Analytics - [Vercel Analytics](https://vercel.com/analytics)
 - Formatting - [Prettier](https://prettier.io)
-
+- Unit tests - [vitest](https://vitest.dev/)
 
 ![](public/dashboard-screenshot.png)
 *A screenshot of the application*
