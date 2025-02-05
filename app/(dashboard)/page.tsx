@@ -1,16 +1,38 @@
-import { HomeIcon } from 'lucide-react';
+import {
+  LineChartIcon,
+  PackageIcon,
+  ShoppingCartIcon,
+  UsersIcon
+} from 'lucide-react';
+import { NavLinkBlock } from '@/app/(dashboard)/NavLinkBlock';
 
 export default async function Page() {
   return (
     <div
       className={
-        'text-muted-foreground p-12 border rounded-xl border-dashed text-center flex justify-center items-center max-w-screen-md flex-col'
+        'grid grid-cols-2 md:grid-cols-4 gap-6 max-w-screen-2xl mr-auto'
       }
     >
-      <div>
-        <HomeIcon className={'size-6'} />
-      </div>
-      <div>Home page</div>
+      <NavLinkBlock
+        href={'/orders'}
+        icon={<ShoppingCartIcon />}
+        title={'Orders'}
+      />
+      <NavLinkBlock
+        href={'/products'}
+        icon={<PackageIcon />}
+        title={'Products'}
+      />
+      <NavLinkBlock
+        href={'/customers'}
+        icon={<UsersIcon />}
+        title={'Customers'}
+      />
+      <NavLinkBlock
+        href={'/analytics'}
+        icon={<LineChartIcon />}
+        title={'Analytics'}
+      />
     </div>
   );
 }

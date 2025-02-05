@@ -2,19 +2,18 @@
 import React, { useState } from 'react';
 import {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
 import { PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  DialogBody,
-  DialogHeader
-} from 'next/dist/client/components/react-dev-overlay/internal/components/Dialog';
+
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
