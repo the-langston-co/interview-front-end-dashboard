@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { productCreateSchema, SelectProduct } from '@/lib/schemas';
+import { productCreateSchema, Product } from '@/lib/schemas';
 import {
   Form,
   FormControl,
@@ -31,7 +31,7 @@ import { revalidateProducts } from '@/app/(dashboard)/actions';
 import { toast } from 'sonner';
 
 export type CreateProductButtonProps = {
-  afterSave?: (product: SelectProduct) => void;
+  afterSave?: (product: Product) => void;
 };
 
 type FormValues = z.input<typeof productCreateSchema>;
@@ -45,7 +45,9 @@ const initialValues: FormValues = {
   stock: ''
 };
 
-export function CreateProductButton({ afterSave }: CreateProductButtonProps) {
+export function CreateProductDialogButton({
+  afterSave
+}: CreateProductButtonProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<FormValues>({

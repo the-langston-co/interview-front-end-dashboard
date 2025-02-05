@@ -1,6 +1,6 @@
 import { getProducts } from '@/lib/db';
-import { ProductStatus } from '@/lib/models/Product';
 import { ProductsPage } from '@/app/(dashboard)/products/ProductsPage';
+import { ProductStatus } from '@/lib/schemas';
 
 export default async function Page(props: {
   searchParams: Promise<{

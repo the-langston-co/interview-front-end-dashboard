@@ -1,13 +1,13 @@
-import { ProductStatus } from '@/lib/models/Product';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 import { and, eq, like, SQL } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   productCreateSchema,
+  ProductStatus,
   productTable,
   productUpdateSchema,
-  SelectProduct,
+  Product,
   usersTable
 } from '@/lib/schemas';
 
@@ -26,7 +26,7 @@ export async function getProducts({
   status?: ProductStatus;
   pageSize?: number;
 }): Promise<{
-  products: SelectProduct[];
+  products: Product[];
   totalProducts: number;
   hasMore?: boolean;
 }> {

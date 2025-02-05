@@ -12,9 +12,9 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from '@/app/(dashboard)/actions';
 
-import { SelectProduct } from '@/lib/schemas';
+import { Product } from '@/lib/schemas';
 
-export function ProductRow({ product }: { product: SelectProduct }) {
+export function ProductRow({ product }: { product: Product }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">

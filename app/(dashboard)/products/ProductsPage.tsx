@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { File, PlusCircle } from 'lucide-react';
 import { ProductsTable } from './ProductsTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { SelectProduct } from '@/lib/schemas';
+import { Product } from '@/lib/schemas';
 import { toast } from 'sonner';
 
 export type ProductsPageProps = {
-  products: SelectProduct[];
+  products: Product[];
   totalProducts: number;
   tab?: string;
 };

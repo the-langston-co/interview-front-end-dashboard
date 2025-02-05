@@ -20,14 +20,14 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SelectProduct } from '@/lib/schemas';
+import { Product } from '@/lib/schemas';
 
 export function ProductsTable({
   products,
   offset,
   totalProducts
 }: {
-  products: SelectProduct[];
+  products: Product[];
   offset: number;
   totalProducts: number;
 }) {

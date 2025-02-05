@@ -22,7 +22,8 @@ export const usersTable = sqliteTable('user', {
 });
 export type SelectUser = typeof usersTable.$inferSelect;
 export const statusEnum = z.enum(['active', 'inactive', 'archived']);
-export const productCreateSchema = createInsertSchema(productTable, {
+
+const schemaRefinements = {
   status: statusEnum,
   price: z
     .union([z.string(), z.number()])
@@ -32,8 +33,17 @@ export const productCreateSchema = createInsertSchema(productTable, {
     .union([z.string(), z.number()])
     .transform(Number)
     .pipe(z.coerce.number())
-});
+};
+
+export const productCreateSchema = createInsertSchema(
+  productTable,
+  schemaRefinements
+);
+
 export const productUpdateSchema = createUpdateSchema(productTable, {
-  status: statusEnum
+  status: statusEnum,
+  schema: schemaRefinements
 });
-export type SelectProduct = typeof productTable.$inferSelect;
+
+export type Product = typeof productTable.$inferSelect;
+export type ProductStatus = z.infer<typeof statusEnum>;
